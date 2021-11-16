@@ -1,0 +1,25 @@
+body{
+    background-image: url(photo/code.gif);
+    /* background-color: grey; */
+}
+header{
+    background-color: grey;
+    height: 15em;
+    margin-left: 5em;
+    margin-right: 5em;
+}
+main{
+    background-color: white;
+    margin: 5em;
+    padding: 5em;
+    margin-left: 5em;
+    margin-right: 5em;
+    /* width: 44em; */
+    height: 44em;
+}
+footer{
+    background-color: grey;
+    height: 15em;
+    margin-left: 5em;
+    margin-right: 5em;
+}
