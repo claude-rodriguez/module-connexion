@@ -1,12 +1,43 @@
 body{
+    /* height: 177em; */
     background-image: url(photo/code.gif);
     /* background-color: grey; */
 }
 header{
     background-color: grey;
-    height: 15em;
+    /* height: 15em; */
     margin-left: 5em;
     margin-right: 5em;
+}
+#navheader{
+    display: flex;
+    flex-direction: row;
+}
+#ulheader{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    font-size: 2em;
+}
+.liheader{
+    list-style:none;
+    text-decoration: none;
+}
+#titre {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+#titre1{
+    font-family: 'Estonia', cursive;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-family: 'Permanent Marker', cursive;
+    /* color: royalblue; */
+    font-size: 3em;
+    text-shadow: 2px 2px 4px royalblue;
+}
+a{
+    text-decoration: none;
 }
 main{
     background-color: white;
@@ -15,11 +46,56 @@ main{
     margin-left: 5em;
     margin-right: 5em;
     /* width: 44em; */
-    height: 44em;
+    /* height: 4em; */
 }
 footer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
     background-color: grey;
-    height: 15em;
     margin-left: 5em;
-    margin-right: 5em;
+    margin-right: 5em;   
+}
+ #navfooter{ 
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+} 
+ #ulfooter1{ 
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    list-style:none;
+    text-decoration: none;
+}
+#ulfooter2{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    list-style:none;
+    text-decoration: none;
+}
+#ulfooter2{
+    width: 22em;
+    background-color: yellow;
+}
+#socialfooter{
+    display: flex;
+    list-style:none;
+    text-decoration: none;
+    flex-direction: column;
+    width: 100%;
+    background-color: tomato;
+} 
+.h2contactfooter{
+    width: 100%;
+    font-size: 30px;
+    background-color: turquoise;
+}
+.afooter{
+    font-size: 20px;
+}
+.footerlogo{
+    width: 2em;
+    height: 2em;
 }

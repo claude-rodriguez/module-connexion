@@ -6,6 +6,9 @@ session_start();
 
 <head>
     <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Estonia&family=Noto+Sans+KR:wght@100&family=Permanent+Marker&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="connexion.css">
     <title>ACCUEIL</title>
 </head>
@@ -13,7 +16,20 @@ session_start();
     <body>
 
         <header>
-    
+
+            <div>
+                <div id="titre">               
+                    <h1 id="titre1"><a href="index.php"> MICRO-INFORMATIQUE</a></h1>
+                </div>              
+            </div>
+            <nav id="navheader">
+                <ul id="ulheader">
+                    <li class="liheader"><a href="index.php">Accueil</a></li>
+                    <li class="liheader"><a href="profil.php">Profil</a></li>
+                    <li class="liheader"><a href="connexion.php">Connexion</a></li>
+                    <li class="liheader"><a >Deconnexion</a></li>
+                </ul>
+            </nav>
         
         </header>
 
@@ -25,7 +41,28 @@ session_start();
         </main>
         
         <footer>
-            
+            <nav id="navfooter">
+                <ul id="ulfooter1">
+                    <h2 class="h2contactfooter">Contact:</h2>
+                    <li><a class="afooter" href="">Qui Sommes Nous ?</a></li>
+                    <li><a class="afooter" href="">FAQ</a></li>
+                    <li><a class="afooter" href="">Conditions générales</a></li>
+                </ul>
+                <ul id="ulfooter2">
+                    <h2 class="h2contactfooter">BESOIN D'AIDE ?</h2>
+                    <li><a class="afooter" href="">Questions Fréquentes</a></li>
+                    <li><a class="afooter" href="">Modes De Livraison</a></li>
+                    <li><a class="afooter" href="">Modes De Règlement</a></li>
+                </ul>
+                <ul id="ulfooter3">
+                    <h2 class="h2contactfooter">Réseaux-Social:</h2>
+                    <li id="socialfooter">
+                        <a class="afooter" href=""><img class="footerlogo" src="photo/twitter.png" alt="Twitter">Twitter</a>
+                        <a class="afooter" href=""><img class="footerlogo" src="photo/logofacebook.jpg" alt="Facebook">Facebook</a>
+                        <a class="afooter" href=""><img class="footerlogo" src="photos/Instagram.png" alt="Instagram">Instagram</a>                        
+                    </li>
+                </ul>
+            </nav>
         </footer>
             
     </body>
