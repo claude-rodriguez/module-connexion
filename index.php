@@ -43,23 +43,23 @@ session_start();
         <footer>
             <nav id="navfooter">
                 <ul id="ulfooter1">
-                    <h2 class="h2contactfooter">Contact:</h2>
+                    <h2 id="h2contactfooter1">Contact:</h2>
                     <li><a class="afooter" href="">Qui Sommes Nous ?</a></li>
                     <li><a class="afooter" href="">FAQ</a></li>
                     <li><a class="afooter" href="">Conditions générales</a></li>
                 </ul>
                 <ul id="ulfooter2">
-                    <h2 class="h2contactfooter">BESOIN D'AIDE ?</h2>
+                    <h2 ID="h2contactfooter2">BESOIN D'AIDE ?</h2>
                     <li><a class="afooter" href="">Questions Fréquentes</a></li>
                     <li><a class="afooter" href="">Modes De Livraison</a></li>
                     <li><a class="afooter" href="">Modes De Règlement</a></li>
                 </ul>
                 <ul id="ulfooter3">
-                    <h2 class="h2contactfooter">Réseaux-Social:</h2>
+                    <h2 id="h2contactfooter3">Réseaux-Social:</h2>
                     <li id="socialfooter">
                         <a class="afooter" href=""><img class="footerlogo" src="photo/twitter.png" alt="Twitter">Twitter</a>
                         <a class="afooter" href=""><img class="footerlogo" src="photo/logofacebook.jpg" alt="Facebook">Facebook</a>
-                        <a class="afooter" href=""><img class="footerlogo" src="photos/Instagram.png" alt="Instagram">Instagram</a>                        
+                        <a class="afooter" href=""><img class="footerlogo" src="photo/Instagram.png" alt="Instagram">Instagram</a>                        
                     </li>
                 </ul>
             </nav>
