@@ -27,7 +27,7 @@ session_start();
                     <li class="liheader"><a href="index.php">Accueil</a></li>
                     <li class="liheader"><a href="profil.php">Profil</a></li>
                     <li class="liheader"><a href="connexion.php">Connexion</a></li>
-                    <li class="liheader"><a >Deconnexion</a></li>
+                    <li class="liheader"><a href="">Deconnexion</a></li>
                 </ul>
             </nav>
         
