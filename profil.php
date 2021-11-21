@@ -35,25 +35,24 @@ session_start();
 
         <main>
         <main id="mainco">               
-            <?php                       
-            $db = mysqli_connect ("localhost", "root", "", "moduleconnexion");
+        <?php                       
+            $db = mysqli_connect ("localhost", "root", "", "livreor");
             if (isset($_SESSION["username"])){ 
                 if (isset($_POST["newlogin"])and isset($_POST["newpassword"])){
-                if($_POST["newlogin"]==""or $_POST["newpassword"]==""){
-                echo"conditions non remplies";
+                    if($_POST["newlogin"]==""or $_POST["newpassword"]==""){
+                    echo"conditions non remplies";
             }
-            else{
-                mysqli_query ($db, "UPDATE utilisateurs SET login = '$_POST[newlogin]',password = '$_POST[newpassword]'WHERE id = '$_SESSION[id]'");
-                $_SESSION["username"] = $_POST["newlogin"];
-                echo "modification réussi";}
-                if(isset($_POST["deconnexion"])){
-                session_destroy();
-                header('location:profil.php');
+                    else{
+                    mysqli_query ($db, "UPDATE utilisateurs SET login = '$_POST[newlogin]',password = '$_POST[newpassword]'WHERE id = '$_SESSION[id]'");
+                    $_SESSION["username"] = $_POST["newlogin"];
+                    echo "modification réussi";}
+                    if(isset($_POST["deconnexion"])){
+                    session_destroy() ;
+                    header('location:index.php');
             }
-            }  
-                mysqli_close($db);
+            }                             
             }
-            ?>
+        ?>
             <form id="formco" method="post" >
                 <div id="divco">                   
                     <h1>CHANGE PASSWORD</h1>                       

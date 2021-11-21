@@ -46,7 +46,7 @@ a{
 }
 #mainco{
     height: 100%;
-    background-color: black;
+    background-color: rgba(128, 128, 128, 0.657);
     margin: 5em;
     padding: 5em;
     margin-left: 5em;

@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -27,29 +28,14 @@ session_start();
                     <li class="liheader"><a href="index.php">Accueil</a></li>
                     <li class="liheader"><a href="profil.php">Profil</a></li>
                     <li class="liheader"><a href="connexion.php">Connexion</a></li>
-                    <li class="liheader"><a >Deconnexion</a></li>
+                    <li class="liheader"><a href="index.php">Deconnexion</a></li>
                 </ul>
             </nav>
         
         </header>
 
-        <main id="mainco">                       
-                        <?php
-                        $db = mysqli_connect ("localhost", "root", "", "moduleconnexion"); 
-                        if (isset($_POST['login'], $_POST['password'])){
-                        $sql = "INSERT INTO utilisateurs (login, prenom, nom, password) VALUES ('$_POST[login]','$_POST[prenom]','$_POST[nom]','$_POST[password]')";
-                        if ($_POST["Envoyer"] == "Envoyer" and $_POST["password"] == $_POST["password1"]) {
-                        $query = mysqli_query ($db, $sql);
-                        $result = mysqli_fetch_assoc($query);
-                        var_dump ($result);
-                        header ('Location:connexion.php');} 
-                        elseif ($_POST["Envoyer"] == "Envoyer" and $_POST["password"] !== $_POST["password1"]){
-                        echo "ATTENTION VOTRE MOT DE PASSE EST DIFFERENT";}
-                            // print_r ($_POST["password"]) ;                       
-                            header('location:index.php');
-                            mysqli_close($db);
-                        } 
-                        ?> 
+        <main id="mainco">
+            
             <form id="formco" method="POST" action= "inscription.php">
                 <div id="divco">
                     <h1>INSCRIPTION</h1>  
@@ -66,6 +52,33 @@ session_start();
                     <P><button class="w" type="submit" name="Envoyer" value="Envoyer">Envoyer </button> </P>
                 </div>   
             </form>
+                <?php
+                    //   connexion à la base de donnée
+                    $db = mysqli_connect ("localhost", "root", "", "moduleconnexion"); 
+
+                    //   indiquer l'insertion dans la base de donnée    
+                    if (isset($_POST['login'], $_POST['password'])){
+                        $sql = "INSERT INTO utilisateurs (login, prenom, nom, password) VALUES ('$_POST[login]','$_POST[prenom]','$_POST[nom]','$_POST[password]')";
+
+                    // si on utilise envoyer et si password est identique à password 1
+
+                    if ($_POST["Envoyer"] == "Envoyer" and $_POST["password"] == $_POST["password1"]) {
+
+                    //   instruction à la base de donnée
+                    mysqli_query ($db, $sql);
+
+                    //   si requete ok rediriger sur page de connexion
+                    header ('Location:connexion.php');
+                    }
+                    //   si requete pas ok indiquer que le password est invalide
+                    elseif ($_POST["Envoyer"] == "Envoyer" and $_POST["password"] !== $_POST["password1"]){
+                        echo  "<p class=\"w\">ATTENTION MOT DE PASSE INVALIDE</p>";
+                    }
+                    }
+                    //   fermeture connection avec database
+                    mysqli_close($db);
+
+                ?>
                         
         </main>
         <footer>

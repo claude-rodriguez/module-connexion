@@ -27,20 +27,21 @@ session_start();
                     <li class="liheader"><a href="index.php">Accueil</a></li>
                     <li class="liheader"><a href="profil.php">Profil</a></li>
                     <li class="liheader"><a href="connexion.php">Connexion</a></li>
-                    <li class="liheader"><a >Deconnexion</a></li>
+                    <li class="liheader"><a href="index.php">Deconnexion</a></li>
                 </ul>
             </nav>
         
         </header>
 
         <main id="mainco">   
-            <?php
+        <?php
+            session_start();
             $db = mysqli_connect ("localhost", "root", "", "moduleconnexion"); 
             if (isset($_POST["login"])and isset( $_POST["password"])){
-                $sql = "SELECT * FROM utilisateurs WHERE login LIKE '$_POST[login]'";
+                $sql = "SELECT * FROM utilisateurs WHERE login LIKE '$_POST[login]'AND'$_POST[login]'";
                 $query = mysqli_query ($db, $sql);
                 $result = mysqli_fetch_array($query);
-                if (isset($_POST["login"])and isset( $_POST["password"])){
+                
                     if($result == NULL ){
                     echo "login or password not correct";                                
                     }
@@ -49,13 +50,14 @@ session_start();
                         $_SESSION["username"] = $_POST["login"];
                         $_SESSION["id"] = $result[0];
                         $_SESSION["password"] = $_POST["password"];
+                        echo ("Bonjour". $_POST["login"]);
                         $_SESSION['id']=$result['id'];
                         header ('Location:index.php');
                     } 
-                    }   
-                }
-                mysqli_close($db);  
-                }
+                        echo ("Bonjour". $_POST["login"]);
+                    }
+            mysqli_close($db);
+            }
             ?>
             <form id="formco" method="post" action="connexion.php">
                 <div id="divco">

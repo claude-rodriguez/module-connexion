@@ -1,0 +1,1 @@
+// si on utilise envoyer et si password est identique à password 1
