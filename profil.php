@@ -1,5 +1,65 @@
 <?php
 session_start();
+$bdd = new PDO('mysql:host=localhost;dbname=moduleconnexion', 'root', '');
+// $bdd = new PDO('mysql:host=localhost;dbname=claude-rodriguez_moduleconnexion', 'claude', 'rodriguez');
+if(isset($_SESSION['id']) && ($_SESSION['id'] > 0)){
+    $requtilisateur = $bdd->prepare('SELECT * FROM utilisateurs WHERE id = ?');
+    $requtilisateur->execute(array($_SESSION['id']));
+    $infoutilisateur = $requtilisateur->fetch();
+
+    if(isset($_POST['newlogin']) && !empty($_POST['newlogin']) && $_POST['newlogin'] != $infoutilisateur['login']){
+        $login= $_POST['newlogin']; 
+        $requetelogin = $bdd->prepare("SELECT * FROM utilisateurs WHERE login = ?"); // Vérifier encore une fois si le login existe déjà 
+        $requetelogin->execute(array($login));
+        $loginexist = $requetelogin->rowCount(); 
+
+        if($loginexist !== 0){
+            $msg = "Le login existe déjà !";
+        }
+        else { // Créer une nouvelle session avec le nouveau login
+        $newlogin = htmlspecialchars($_POST['newlogin']);
+        $insertlogin = $bdd->prepare("UPDATE utilisateurs SET login = ? WHERE id = ?");
+        $insertlogin->execute(array($newlogin, $_SESSION['id']));
+        $_SESSION['login']=$newlogin; 
+        header('Location: profil.php');
+        }
+    }
+    if(isset($_POST['newnom']) && !empty($_POST['newnom']) && $_POST['newnom'] != $infoutilisateur['nom'])
+    {
+        // Créer une nouvelle session avec le nouveau nom
+        $newnom = htmlspecialchars($_POST['newnom']);
+        $insertnom = $bdd->prepare("UPDATE utilisateurs SET nom = ? WHERE id = ?");
+        $insertnom->execute(array($newnom, $_SESSION['id']));
+        header('Location: profil.php');
+    }
+    if(isset($_POST['newprenom']) && !empty($_POST['newprenom']) && $_POST['newprenom'] != $infoutilisateur['prenom'])
+    {
+        // Créer une nouvelle session avec le nouveau prenom
+        $newprenom = htmlspecialchars($_POST['newprenom']);
+        $insertprenom = $bdd->prepare("UPDATE utilisateurs SET prenom = ? WHERE id = ?");
+        $insertprenom->execute(array($newprenom, $_SESSION['id']));
+        header('Location: profil.php');
+    }
+    if(isset($_POST['newmdp']) && !empty($_POST['newmdp']) && isset($_POST['newmdp2']) && !empty($_POST['newmdp2'])) { //Confirmation des 2 mdp
+    $mdp1 = $_POST['newmdp'];
+    $mdp2 = $_POST['newmdp2'];
+        
+        if($mdp1 == $mdp2)
+        {
+            $hachage = password_hash($mdp1, PASSWORD_BCRYPT);
+            $insertmdp = $bdd->prepare("UPDATE utilisateurs SET password = ? WHERE id = ?");
+            $insertmdp->execute(array($hachage, $_SESSION['id']));
+            header('Location: profil.php');
+        }
+        else
+        {
+            $msg = "Vos mots de passes ne correspondent pas !";
+        }
+    }
+    if(isset($_POST['newlogin']) && $_POST['newlogin'] == $infoutilisateur['login'])
+    {
+        header('Location: profil.php');
+    }
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -27,32 +87,13 @@ session_start();
                     <li class="liheader"><a href="index.php">Accueil</a></li>
                     <li class="liheader"><a href="profil.php">Profil</a></li>
                     <li class="liheader"><a href="connexion.php">Connexion</a></li>
-                    <li class="liheader"><a href="">Deconnexion</a></li>
+                    <li class="liheader"><a href="deconnexion.php">Deconnexion</a></li>
                 </ul>
             </nav>
         
         </header>
 
-        <main>
-        <main id="mainco">               
-        <?php                       
-            $db = mysqli_connect ("localhost", "root", "", "livreor");
-            if (isset($_SESSION["username"])){ 
-                if (isset($_POST["newlogin"])and isset($_POST["newpassword"])){
-                    if($_POST["newlogin"]==""or $_POST["newpassword"]==""){
-                    echo"conditions non remplies";
-            }
-                    else{
-                    mysqli_query ($db, "UPDATE utilisateurs SET login = '$_POST[newlogin]',password = '$_POST[newpassword]'WHERE id = '$_SESSION[id]'");
-                    $_SESSION["username"] = $_POST["newlogin"];
-                    echo "modification réussi";}
-                    if(isset($_POST["deconnexion"])){
-                    session_destroy() ;
-                    header('location:index.php');
-            }
-            }                             
-            }
-        ?>
+        <main id="mainco">                  
             <form id="formco" method="post" >
                 <div id="divco">                   
                     <h1>CHANGE PASSWORD</h1>                       
@@ -62,10 +103,11 @@ session_start();
                     <input class="w" id="newpassword" type="password" name="newpassword" required /></p>
                     <p><LAbel class="w" for="confirm_newpassword"> CONFIRM NEW PASSWORD: </LAbel>
                     <input class="w" id="confirm_newpassword" type="password" name="confirm_newpassword" required /></p>
-                    <P><input class="w" type="submit" value="Envoyer" /> </P>                                                    
+                    <P><input class="w" type="submit" value="Envoyer" /></P>                                                    
                 </div>
             </form>
-        </main>      
+        </main>
+              
         <footer>
             <nav id="navfooter">
                 <ul id="ulfooter1">
@@ -93,3 +135,10 @@ session_start();
             
     </body>
 </html>
+<?php
+}
+else 
+{
+header("Location: connexion.php"); //Si l'utilisateur n'est pas connecter, alors il sera renvoyer sur connexion.php
+}
+?>

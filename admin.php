@@ -1,5 +1,9 @@
 <?php
-session_start();
+$bdd = new PDO('mysql:host=localhost;dbname=moduleconnexion', 'root', '');
+// $bdd = new PDO('mysql:host=localhost;dbname=claude-rodriguez_moduleconnexion', 'claude', 'rodriguez');
+
+$membres = $bdd->query('SELECT * FROM utilisateurs ORDER BY id DESC LIMIT 0,5');
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -27,17 +31,21 @@ session_start();
                     <li class="liheader"><a href="index.php">Accueil</a></li>
                     <li class="liheader"><a href="profil.php">Profil</a></li>
                     <li class="liheader"><a href="connexion.php">Connexion</a></li>
-                    <li class="liheader"><a >Deconnexion</a></li>
+                    <li class="liheader"><a href="deconnexion.php">Deconnexion</a></li>
                 </ul>
             </nav>
         
         </header>
 
-        <main>
-           
-                
-            
-
+        <main id="mainadmin">
+            <div id="divadmin">
+                <h2>Administration</h2> <br>
+                    <ul>
+                        <?php while($m = $membres->fetch()) { ?>
+                        <li class="liadmin"><?= $m['id'] ?>- LOGIN : <?= $m['login'] ?> PRENOM :<?= $m['prenom'] ?> NOM :<?= $m['nom'] ?></a></li>
+                        <?php } ?>
+                    </ul><br>
+            </div>
         </main>
         
         <footer>

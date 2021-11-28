@@ -22,8 +22,9 @@ header{
     list-style:none;
     text-decoration: none;
     border: solid;
-    border-radius: 2em;
-    background-image: url(photo/images.jfif);
+    border-radius: 1em;
+    background-color: rgba(0, 0, 255, 0.431);
+    /* background-image: url(photo/images.jfif); */
 }
 #titre {
     display: flex;
@@ -36,7 +37,7 @@ header{
     font-family: 'Permanent Marker', cursive;
     font-size: 3em;
     text-shadow: 2px 2px 4px royalblue;
-    background-image: url(photo/images.jfif);
+    /* background-image: url(photo/images.jfif); */
     border-radius: 1em;
 
 }
@@ -44,9 +45,48 @@ a{
     text-decoration: none;
     /* color: black; */
 }
+main{
+    margin: 5em;
+    padding: 5em;
+    margin-left: 5em;
+    margin-right: 5em;
+    background-color: gray;
+}
+#h2main{
+    display: flex;
+    justify-content: center;
+    list-style:none;
+    text-decoration: none;
+    background-color: rgba(0, 0, 255, 0.431);
+    color: black;
+
+}
+#navmain{
+    list-style:none;
+    text-decoration: none;
+    margin: 5em;
+    padding: 5em;
+    margin-left: 5em;
+    margin-right: 5em;
+}
+#ulmain{
+    margin-top: -5em;
+    display: flex;
+    flex-direction: row; 
+    list-style:none;
+    text-decoration: none;
+    justify-content:space-between;
+}
+.mainli{
+    background-color: rgba(0, 0, 255, 0.431);
+}
+.h3main{
+    display: flex;
+    justify-content: center;
+}
 #mainco{
     height: 100%;
-    background-color: rgba(128, 128, 128, 0.657);
+    /* background-color: rgba(128, 128, 128, 0.034); */
     margin: 5em;
     padding: 5em;
     margin-left: 5em;
@@ -56,7 +96,8 @@ a{
     display: flex;
     flex-direction: row;
     justify-content: center;
-    background-color: gray;
+    /* background-color: gray; */
+    background-color: rgba(0, 0, 255, 0.431);
 }
 #divco{
     display: flex;
@@ -87,7 +128,6 @@ a{
 #ulfooter2{
     display: flex;
     flex-direction: column;
-
     list-style:none;
     text-decoration: none;
 }
@@ -122,4 +162,28 @@ a{
     text-decoration: none;
     color: black;
     font-size: 20px;
+}
+#admin_main{
+    text-align: center;
+    padding-top: 10%;
+    padding-bottom: 10%;
+}
+#mainadmin{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: gray;
+}
+#divadmin{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 35em;
+    justify-items: center;
+    background-color: blue;
+}
+.liadmin{
+    display: flex;
+    font-size: 1.5em;
 }

@@ -1,7 +1,42 @@
 <?php
 session_start();
+$bdd = new PDO('mysql:host=localhost;dbname=moduleconnexion', 'root', '');
+// $bdd = new PDO('mysql:host=localhost;dbname=claude-rodriguez_moduleconnexion', 'claude', 'rodriguez');
+if (isset($_POST['Envoyer'])){
+    $erreur = "";
+    $login = htmlspecialchars($_POST['login']);
+    $prenom = htmlspecialchars($_POST['prenom']);
+    $nom = htmlspecialchars($_POST['nom']);
+    $password = htmlspecialchars($_POST['password']);
+    $confirmation = htmlspecialchars ($_POST['password1']);
+
+if (!empty($_POST['login']) AND !empty($_POST['prenom']) AND !empty($_POST['nom']) AND !empty($_POST['password']) AND !empty($_POST['password1'])){
+    $loginlenght = strlen($login);
+    $requete=$bdd->prepare("SELECT * FROM utilisateurs WHERE login = ? ");
+    $requete->execute(array($login));
+    $loginexist= $requete->rowCount();
+
+
+    if ($loginlenght > 255)
+    $erreur= "Votre pseudo ne doit pas depasser 255 caractères !";
+    elseif($password !== $confirmation)
+            $erreur="Les mots de passes sont differents !";
+    if($loginexist !== 0)
+    $erreur = "Login deja pris !";
+    if($erreur == ""){
+        $hashage = password_hash($password, PASSWORD_BCRYPT);
+        $insertmbr= $bdd->prepare("INSERT INTO utilisateurs(login, prenom, nom, password) VALUES(?, ?, ?, ?)");
+        $insertmbr->execute(array($login, $prenom, $nom, $hashage));
+        header('location:connexion.php');
+    }
+}
+    else{
+        $erreur="Tout les champs doivent etre remplis !";
+    }
+}
 
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -28,57 +63,33 @@ session_start();
                     <li class="liheader"><a href="index.php">Accueil</a></li>
                     <li class="liheader"><a href="profil.php">Profil</a></li>
                     <li class="liheader"><a href="connexion.php">Connexion</a></li>
-                    <li class="liheader"><a href="index.php">Deconnexion</a></li>
                 </ul>
             </nav>
         
         </header>
 
         <main id="mainco">
+                    <?php
+                    echo $erreur;
+                    ?>
             
             <form id="formco" method="POST" action= "inscription.php">
-                <div id="divco">
+                <div id="divco">                
                     <h1>INSCRIPTION</h1>  
                     <p><LAbel class="w" for="login">LOGIN: </LAbel>
-                    <input id="login" class="w" type="text" name="login" minlength="5" required  /></p>
+                    <input id="login" class="w" type="text" name="login"  required  /></p>
                     <p><LAbel class="w" for="prenom">PRENOM: </LAbel>
                     <input id="prenom" class="w" type="text" name="prenom" required  /></p>
                     <p><LAbel class="w" for="nom">NOM: </LAbel>
                     <input id="nom" class="w" type="text" name="nom" required  /></p>
                     <p><LAbel class="w" for="password"> PASSWORD: </LAbel>
-                    <input id="password" class="w" type="password" name="password" minlength="5" required /></p>
+                    <input id="password" class="w" type="password" name="password"  required /></p>
                     <p><LAbel class="w" for="password1"> CONFIRM PASSWORD: </LAbel>
                     <input id="password1" class="w" type="password" name="password1"required /></p>
-                    <P><button class="w" type="submit" name="Envoyer" value="Envoyer">Envoyer </button> </P>
+                    <P><button class="w" type="submit" name="Envoyer" value="">Envoyer </button> </P>
                 </div>   
             </form>
-                <?php
-                    //   connexion à la base de donnée
-                    $db = mysqli_connect ("localhost", "root", "", "moduleconnexion"); 
-
-                    //   indiquer l'insertion dans la base de donnée    
-                    if (isset($_POST['login'], $_POST['password'])){
-                        $sql = "INSERT INTO utilisateurs (login, prenom, nom, password) VALUES ('$_POST[login]','$_POST[prenom]','$_POST[nom]','$_POST[password]')";
-
-                    // si on utilise envoyer et si password est identique à password 1
-
-                    if ($_POST["Envoyer"] == "Envoyer" and $_POST["password"] == $_POST["password1"]) {
-
-                    //   instruction à la base de donnée
-                    mysqli_query ($db, $sql);
-
-                    //   si requete ok rediriger sur page de connexion
-                    header ('Location:connexion.php');
-                    }
-                    //   si requete pas ok indiquer que le password est invalide
-                    elseif ($_POST["Envoyer"] == "Envoyer" and $_POST["password"] !== $_POST["password1"]){
-                        echo  "<p class=\"w\">ATTENTION MOT DE PASSE INVALIDE</p>";
-                    }
-                    }
-                    //   fermeture connection avec database
-                    mysqli_close($db);
-
-                ?>
+            
                         
         </main>
         <footer>
@@ -104,6 +115,7 @@ session_start();
                     </li>
                 </ul>
             </nav>
+        
         </footer>
             
     </body>

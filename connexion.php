@@ -1,5 +1,34 @@
 <?php
 session_start();
+$bdd = new PDO('mysql:host=localhost;dbname=moduleconnexion', 'root', '');
+// $bdd = new PDO('mysql:host=localhost;dbname=claude-rodriguez_moduleconnexion', 'claude', 'rodriguez');
+if(isset($_POST['Envoyer'])){
+    $login = htmlspecialchars($_POST['login']);
+    $password = $_POST['password'];
+
+    if(!empty($login) AND !empty($password)){
+        $requeteutilisateur = $bdd->prepare("SELECT * FROM utilisateurs WHERE login = ?"); // Vérifier si le login est le même que dans la base de données
+        $requeteutilisateur->execute(array($login));
+        $result = $requeteutilisateur->fetchAll();
+                if (count($result) > 0){  // S'il n'y a pas de login trouvé dans la bdd, alors ça retourne "Mauvais Login"
+                    $sqlPassword = $result[0]['password'];
+                    if(password_verify($password, $sqlPassword)){ // Permet de vérifier si les 2 mots de passes sont identiques
+                        $_SESSION['id'] = $result[0]['id'];  //créé une session avec les éléments de la table utilisateurs
+                        $_SESSION['login'] = $result[0]['login'];
+                        $_SESSION['nom'] = $result[0]['nom'];
+                        $_SESSION['prenom'] = $result[0]['prenom'];
+                        header("Location: index.php");   //Redirige sur la page accueil
+                    }
+                    else{ $erreur = "Mauvais login !"; }
+                }
+                    else{ $erreur = "Mauvais mot de passe !"; }
+
+                    if ($_SESSION['login'] == 'admin'){  //Si le login et le mdp rentré est "admin" alors ça redirige sur la page admin à la place de profil.php
+                        header("Location: admin.php");
+                    }
+    }
+                    else{ $erreur = "Tous les champs doivent être remplis !"; }
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -27,15 +56,15 @@ session_start();
                     <li class="liheader"><a href="index.php">Accueil</a></li>
                     <li class="liheader"><a href="profil.php">Profil</a></li>
                     <li class="liheader"><a href="connexion.php">Connexion</a></li>
-                    <li class="liheader"><a href="index.php">Deconnexion</a></li>
+                    <li class="liheader"><a href="deconnexion.php">Deconnexion</a></li>
+                    <li class="liheader"><a href="inscription.php">Inscription</a></li>
                 </ul>
             </nav>
         
         </header>
 
         <main id="mainco">   
-        <?php
-            session_start();
+            <?php
             $db = mysqli_connect ("localhost", "root", "", "moduleconnexion"); 
             if (isset($_POST["login"])and isset( $_POST["password"])){
                 $sql = "SELECT * FROM utilisateurs WHERE login LIKE '$_POST[login]'AND'$_POST[login]'";
@@ -71,7 +100,7 @@ session_start();
 
                 </div>
             </form>      
-    </main>
+        </main>
         
         <footer>
             <nav id="navfooter">
