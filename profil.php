@@ -1,7 +1,7 @@
 <?php
 session_start();
-$bdd = new PDO('mysql:host=localhost;dbname=moduleconnexion', 'root', '');
-// $bdd = new PDO('mysql:host=localhost;dbname=claude-rodriguez_moduleconnexion', 'claude', 'rodriguez');
+// $bdd = new PDO('mysql:host=localhost;dbname=moduleconnexion', 'root', '');
+$bdd = new PDO('mysql:host=localhost;dbname=claude-rodriguez_moduleconnexion', 'claude', 'rodriguez');
 if(isset($_SESSION['id']) && ($_SESSION['id'] > 0)){
     $requtilisateur = $bdd->prepare('SELECT * FROM utilisateurs WHERE id = ?');
     $requtilisateur->execute(array($_SESSION['id']));
@@ -127,7 +127,7 @@ if(isset($_SESSION['id']) && ($_SESSION['id'] > 0)){
                     <li id="socialfooter">
                         <a class="afooter" href=""><img class="footerlogo" src="photo/twitter.png" alt="Twitter">Twitter</a>
                         <a class="afooter" href=""><img class="footerlogo" src="photo/logofacebook.jpg" alt="Facebook">Facebook</a>
-                        <a class="afooter" href=""><img class="footerlogo" src="photo/Instagram.png" alt="Instagram">Instagram</a>                        
+                        <a class="afooter" href="https://github.com/claude-rodriguez/module-connexion"><img class="footerlogo" src="photo/github.png" alt="github">Git Hub</a>                                                
                     </li>
                 </ul>
             </nav>
@@ -139,6 +139,6 @@ if(isset($_SESSION['id']) && ($_SESSION['id'] > 0)){
 }
 else 
 {
-header("Location: connexion.php"); //Si l'utilisateur n'est pas connecter, alors il sera renvoyer sur connexion.php
+header("Location: connexion.php"); //Si l'utilisateur n'est pas connecté, alors il sera renvoyé sur connexion.php
 }
 ?>

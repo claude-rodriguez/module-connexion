@@ -1,6 +1,6 @@
 <?php
-$bdd = new PDO('mysql:host=localhost;dbname=moduleconnexion', 'root', '');
-// $bdd = new PDO('mysql:host=localhost;dbname=claude-rodriguez_moduleconnexion', 'claude', 'rodriguez');
+// $bdd = new PDO('mysql:host=localhost;dbname=moduleconnexion', 'root', '');
+$bdd = new PDO('mysql:host=localhost;dbname=claude-rodriguez_moduleconnexion', 'claude', 'rodriguez');
 
 $membres = $bdd->query('SELECT * FROM utilisateurs ORDER BY id DESC LIMIT 0,5');
 
@@ -67,7 +67,7 @@ $membres = $bdd->query('SELECT * FROM utilisateurs ORDER BY id DESC LIMIT 0,5');
                     <li id="socialfooter">
                         <a class="afooter" href=""><img class="footerlogo" src="photo/twitter.png" alt="Twitter">Twitter</a>
                         <a class="afooter" href=""><img class="footerlogo" src="photo/logofacebook.jpg" alt="Facebook">Facebook</a>
-                        <a class="afooter" href=""><img class="footerlogo" src="photo/Instagram.png" alt="Instagram">Instagram</a>                        
+                        <a class="afooter" href=""><img class="footerlogo" src="photo/github.png" alt="github">Git Hub</a>                                               
                     </li>
                 </ul>
             </nav>
