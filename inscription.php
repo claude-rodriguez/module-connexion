@@ -1,19 +1,19 @@
 <?php
 session_start();
-// $bdd = new PDO('mysql:host=localhost;dbname=moduleconnexion', 'root', '');
-$bdd = new PDO('mysql:host=localhost;dbname=claude-rodriguez_moduleconnexion', 'claude', 'rodriguez');
+$bdd = new PDO('mysql:host=localhost;dbname=moduleconnexion', 'root', '');
+// $bdd = new PDO('mysql:host=localhost;dbname=claude-rodriguez_moduleconnexion', 'claude', 'rodriguez');
 $bdd ->setAttribute(PDO::ATTR_ERRMODE ,PDO::ERRMODE_WARNING);
 if (isset($_POST['Envoyer'])){
     $erreur = "";
     $login = htmlspecialchars($_POST['login']);
     $prenom = htmlspecialchars($_POST['prenom']);
     $nom = htmlspecialchars($_POST['nom']);
-    $password = htmlspecialchars($_POST['password']);
+    $password = htmlspecialchars($_POST["password"]);
     $confirmation = htmlspecialchars ($_POST['password1']);
 
 if (!empty($_POST['login']) AND !empty($_POST['prenom']) AND !empty($_POST['nom']) AND !empty($_POST['password']) AND !empty($_POST['password1'])){
-    $loginlenght = strlen($login);
-    $requete=$bdd->prepare("SELECT * FROM utilisateurs WHERE login = ? ");
+    $loginlenght = strlen($login);  //Permet de calculer la longueur du login
+    $requete=$bdd->prepare("SELECT * FROM utilisateurs WHERE login = ? "); 
     $requete->execute(array($login));
     $loginexist= $requete->rowCount();
 
@@ -28,19 +28,16 @@ if (!empty($_POST['login']) AND !empty($_POST['prenom']) AND !empty($_POST['nom'
         $hashage = password_hash($password, PASSWORD_BCRYPT);
         $insertmbr= $bdd->prepare("INSERT INTO utilisateurs(login, prenom, nom, password) VALUES(?, ?, ?, ?)");
         $insertmbr->execute(array($login, $prenom, $nom, $hashage));
-        header('location:connexion.php');
+        $erreur = "Votre compte à bien été crée !";
     }
 }
     else{
         $erreur="Tout les champs doivent etre remplis !";
     }
-}
-
-?>
+}?>
 
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -70,12 +67,18 @@ if (!empty($_POST['login']) AND !empty($_POST['prenom']) AND !empty($_POST['nom'
         </header>
 
         <main id="mainco">
-                    <?php
-                    echo $erreur;
-                    ?>
             
             <form id="formco" method="POST" action= "inscription.php">
-                <div id="divco">                
+     
+                   
+                <div id="divco">
+                        <div style="color: red;">
+                        <?php
+                        if (isset($erreur)){
+                        echo $erreur;
+                        }
+                        ?>
+                    </div>   
                     <h1>INSCRIPTION</h1>  
                     <p><LAbel class="w" for="login">LOGIN: </LAbel>
                     <input id="login" class="w" type="text" name="login"  required  /></p>

@@ -1,9 +1,10 @@
 <?php
 session_start();
-// $bdd = new PDO('mysql:host=localhost;dbname=moduleconnexion', 'root', '');
-$bdd = new PDO('mysql:host=localhost;dbname=claude-rodriguez_moduleconnexion', 'claude', 'rodriguez');
+var_dump($_SESSION);
+$bdd = new PDO('mysql:host=localhost;dbname=moduleconnexion', 'root', '');
+//  $bdd = new PDO('mysql:host=localhost;dbname=claude-rodriguez_moduleconnexion', 'claude', 'rodriguez');
 $bdd ->setAttribute(PDO::ATTR_ERRMODE ,PDO::ERRMODE_WARNING);
-if(isset($_SESSION['id']) && ($_SESSION['id'] > 0)){
+if(isset($_SESSION['id']) && $_SESSION['id'] > 0){
     $requtilisateur = $bdd->prepare('SELECT * FROM utilisateurs WHERE id = ?');
     $requtilisateur->execute(array($_SESSION['id']));
     $infoutilisateur = $requtilisateur->fetch();
@@ -25,23 +26,21 @@ if(isset($_SESSION['id']) && ($_SESSION['id'] > 0)){
         header('Location: profil.php');
         }
     }
-    if(isset($_POST['newnom']) && !empty($_POST['newnom']) && $_POST['newnom'] != $infoutilisateur['nom'])
-    {
+    if(isset($_POST['newnom']) && !empty($_POST['newnom']) && $_POST['newnom'] != $infoutilisateur['nom']){
         // Créer une nouvelle session avec le nouveau nom
         $newnom = htmlspecialchars($_POST['newnom']);
         $insertnom = $bdd->prepare("UPDATE utilisateurs SET nom = ? WHERE id = ?");
         $insertnom->execute(array($newnom, $_SESSION['id']));
         header('Location: profil.php');
     }
-    if(isset($_POST['newprenom']) && !empty($_POST['newprenom']) && $_POST['newprenom'] != $infoutilisateur['prenom'])
-    {
+    if(isset($_POST['newprenom']) && !empty($_POST['newprenom']) && $_POST['newprenom'] != $infoutilisateur['prenom']){
         // Créer une nouvelle session avec le nouveau prenom
         $newprenom = htmlspecialchars($_POST['newprenom']);
         $insertprenom = $bdd->prepare("UPDATE utilisateurs SET prenom = ? WHERE id = ?");
         $insertprenom->execute(array($newprenom, $_SESSION['id']));
         header('Location: profil.php');
     }
-    if(isset($_POST['newmdp']) && !empty($_POST['newmdp']) && isset($_POST['newmdp2']) && !empty($_POST['newmdp2'])) { //Confirmation des 2 mdp
+    if(isset($_POST['newmdp']) && !empty($_POST['newmdp']) && isset($_POST['newmdp2']) && !empty($_POST['newmdp2'])){ //Confirmation des 2 mdp
     $mdp1 = $_POST['newmdp'];
     $mdp2 = $_POST['newmdp2'];
         
@@ -96,14 +95,31 @@ if(isset($_SESSION['id']) && ($_SESSION['id'] > 0)){
 
         <main id="mainco">                  
             <form id="formco" method="post" >
-                <div id="divco">                   
+                    
+                <div id="divco">
+                    <div style="color: red;">
+                        <?php
+                        if (isset($erreur)){
+                        echo $erreur;
+                        }
+                        ?>
+                    </div>                
                     <h1>CHANGE PASSWORD</h1>                       
                     <p><LAbel class="w" for="newlogin"> NEW LOGIN: </LAbel>
-                    <input class="w" id="newlogin" type="text" name="newlogin" required /></p>               
-                    <p><LAbel class="w" for="newpassword"> NEW PASSWORD: </LAbel>
-                    <input class="w" id="newpassword" type="password" name="newpassword" required /></p>
-                    <p><LAbel class="w" for="confirm_newpassword"> CONFIRM NEW PASSWORD: </LAbel>
-                    <input class="w" id="confirm_newpassword" type="password" name="confirm_newpassword" required /></p>
+                    <input class="w" id="newlogin" type="text" name="newlogin" required /></p>
+                    
+                    <p><LAbel class="w" for="newprenom"> NEW PRENOM: </LAbel>
+                    <input class="w" id="newprenom" type="text" name="newprenom" required /></p>
+
+                    <p><LAbel class="w" for="newnom"> NEW NOM: </LAbel>
+                    <input class="w" id="newnom" type="text" name="newnom" required /></p>
+
+                    <p><LAbel class="w" for="newmdp"> NEW PASSWORD: </LAbel>
+                    <input class="w" id="newmdp" type="password" name="newmdp" required /></p>
+
+                    <p><LAbel class="w" for="newmdp2"> CONFIRM NEW PASSWORD: </LAbel>
+                    <input class="w" id="newmdp2" type="password" name="newmdp2" required /></p>
+
                     <P><input class="w" type="submit" value="Envoyer" /></P>                                                    
                 </div>
             </form>
@@ -140,7 +156,6 @@ if(isset($_SESSION['id']) && ($_SESSION['id'] > 0)){
 }
 else 
 {
-header("Location: connexion.php"); //Si l'utilisateur n'est pas connecté, alors il sera renvoyé
- sur connexion.php
+header("Location: connexion.php"); //Si l'utilisateur n'est pas connecté, alors il sera renvoyé sur connexion.php
 }
 ?>

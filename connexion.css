@@ -1,6 +1,8 @@
 body{
     height: 100%;
-    background-image: url(photo/code.gif);
+    /* background-color: rgba(255, 255, 0, 0.205); */
+    /* background-image: url(photo/code.gif); */
+    background-color: rgba(128, 128, 128, 0.493);
 }
 header{
     background-color: grey;
@@ -78,7 +80,7 @@ main{
     justify-content:space-between;
 }
 .mainli{
-    background-color: rgba(0, 0, 255, 0.431);
+    /* background-color: rgba(0, 0, 255, 0.431); */
 }
 .h3main{
     display: flex;
@@ -96,7 +98,6 @@ main{
     display: flex;
     flex-direction: row;
     justify-content: center;
-    /* background-color: gray; */
     background-color: rgba(0, 0, 255, 0.431);
 }
 #divco{

@@ -1,34 +1,34 @@
 <?php
 session_start();
-// $bdd = new PDO('mysql:host=localhost;dbname=moduleconnexion', 'root', '');
-$bdd = new PDO('mysql:host=localhost;dbname=claude-rodriguez_moduleconnexion', 'claude', 'rodriguez');
-$bdd ->setAttribute(PDO::ATTR_ERRMODE ,PDO::ERRMODE_WARNING);
+var_dump ($_SESSION);
+$bdd = new PDO('mysql:host=localhost;dbname=moduleconnexion', 'root', '');
+// $bdd = new PDO('mysql:host=localhost;dbname=claude-rodriguez_moduleconnexion', 'claude', 'rodriguez');
+// $bdd ->setAttribute(PDO::ATTR_ERRMODE ,PDO::ERRMODE_WARNING);
 if(isset($_POST['Envoyer'])){
-    $login = htmlspecialchars($_POST['login']);
+    $login = htmlspecialchars($_POST['login']); 
     $password = $_POST['password'];
 
     if(!empty($login) AND !empty($password)){
         $requeteutilisateur = $bdd->prepare("SELECT * FROM utilisateurs WHERE login = ?"); // Vérifier si le login est le même que dans la base de données
         $requeteutilisateur->execute(array($login));
         $result = $requeteutilisateur->fetchAll();
-                if (count($result) > 0){  // S'il n'y a pas de login trouvé dans la bdd, alors ça retourne "Mauvais Login"
-                    $sqlPassword = $result[0]['password'];
-                    if(password_verify($password, $sqlPassword)){ // Permet de vérifier si les 2 mots de passes sont identiques
-                        $_SESSION['id'] = $result[0]['id'];  //créé une session avec les éléments de la table utilisateurs
-                        $_SESSION['login'] = $result[0]['login'];
-                        $_SESSION['nom'] = $result[0]['nom'];
-                        $_SESSION['prenom'] = $result[0]['prenom'];
-                        header("Location: index.php");   //Redirige sur la page accueil
-                    }
-                    else{ $erreur = "Mauvais login !"; }
+            if (count($result) > 0){  // S'il n'y a pas de login trouvé dans la bdd, alors ça retourne "Mauvais Login"
+                $sqlPassword = $result[0]['password'];
+                if(password_verify($password, $sqlPassword)){ // Permet de vérifier si les 2 mots de passes sont identiques
+                    $_SESSION['id'] = $result[0]['id'];  //créé une session avec les éléments de la table utilisateurs
+                    $_SESSION['login'] = $result[0]['login'];
+                    $_SESSION['nom'] = $result[0]['nom'];
+                    $_SESSION['prenom'] = $result[0]['prenom'];
+                        header("Location: profil.php");   //Redirige sur la page profil
                 }
-                    else{ $erreur = "Mauvais mot de passe !"; }
-
-                    if ($_SESSION['login'] == 'admin'){  //Si le login et le mdp rentré est "admin" alors ça redirige sur la page admin à la place de profil.php
-                        header("Location: admin.php");
-                    }
+                else{ $erreur = "Mauvais login !"; }
+            }
+                else{ $erreur = "Mauvais mot de passe !"; }
+                if ($_SESSION['login'] == 'admin'){  //Si le login et le mdp rentré est "admin" alors ça redirige sur la page admin à la place de profil.php
+                    header("Location: admin.php");
+                }
     }
-                    else{ $erreur = "Tous les champs doivent être remplis !"; }
+                else{ $erreur = "Tous les champs doivent être remplis !"; }
 }
 ?>
 <!DOCTYPE html>
@@ -65,36 +65,20 @@ if(isset($_POST['Envoyer'])){
         </header>
 
         <main id="mainco">   
-            <?php
-            $db = mysqli_connect ("localhost", "root", "", "moduleconnexion"); 
-            if (isset($_POST["login"])and isset( $_POST["password"])){
-                $sql = "SELECT * FROM utilisateurs WHERE login LIKE '$_POST[login]'AND'$_POST[login]'";
-                $query = mysqli_query ($db, $sql);
-                $result = mysqli_fetch_array($query);
-                
-                    if($result == NULL ){
-                    echo "login or password not correct";                                
-                    }
-                    else{  
-                        if($_POST["password"]==$result["password"]){
-                        $_SESSION["username"] = $_POST["login"];
-                        $_SESSION["id"] = $result[0];
-                        $_SESSION["password"] = $_POST["password"];
-                        echo ("Bonjour". $_POST["login"]);
-                        $_SESSION['id']=$result['id'];
-                        header ('Location:index.php');
-                    } 
-                        echo ("Bonjour". $_POST["login"]);
-                    }
-            mysqli_close($db);
-            }
-            ?>
+        
             <form id="formco" method="post" action="connexion.php">
+                    <div style="color: yellow;">
+                        <?php
+                        if (isset($erreur)){
+                            echo $erreur;
+                        }
+                        ?>
+                    </div>
                 <div id="divco">
                     <h1>CONNEXION</h1>
                 
-                    <p><LAbel class="w" for="newlogin">LOGIN: </LAbel>
-                    <input id="newlogin" class="w" type="text" name="login"required  /></p>
+                    <p><LAbel class="w" for="login">LOGIN: </LAbel>
+                    <input id="login" class="w" type="text" name="login"required  /></p>
                     <p><LAbel class="w" for="password"> PASSWORD: </LAbel>
                     <input id="password" class="w" type="password" name="password"required /></p>
                     <P><button class="w" type="submit" name="Envoyer" value="Envoyer">Envoyer </button> </P>
