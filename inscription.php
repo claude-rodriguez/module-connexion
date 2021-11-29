@@ -1,7 +1,7 @@
 <?php
 session_start();
-$bdd = new PDO('mysql:host=localhost;dbname=moduleconnexion', 'root', '');
-// $bdd = new PDO('mysql:host=localhost;dbname=claude-rodriguez_moduleconnexion', 'claude', 'rodriguez');
+// $bdd = new PDO('mysql:host=localhost;dbname=moduleconnexion', 'root', '');
+$bdd = new PDO('mysql:host=localhost;dbname=claude-rodriguez_moduleconnexion', 'claude', 'rodriguez');
 $bdd ->setAttribute(PDO::ATTR_ERRMODE ,PDO::ERRMODE_WARNING);
 if (isset($_POST['Envoyer'])){
     $erreur = "";

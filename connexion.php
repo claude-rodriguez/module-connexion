@@ -1,9 +1,9 @@
 <?php
 session_start();
-var_dump ($_SESSION);
-$bdd = new PDO('mysql:host=localhost;dbname=moduleconnexion', 'root', '');
-// $bdd = new PDO('mysql:host=localhost;dbname=claude-rodriguez_moduleconnexion', 'claude', 'rodriguez');
-// $bdd ->setAttribute(PDO::ATTR_ERRMODE ,PDO::ERRMODE_WARNING);
+// var_dump ($_SESSION);
+// $bdd = new PDO('mysql:host=localhost;dbname=moduleconnexion', 'root', '');
+$bdd = new PDO('mysql:host=localhost;dbname=claude-rodriguez_moduleconnexion', 'claude', 'rodriguez');
+$bdd ->setAttribute(PDO::ATTR_ERRMODE ,PDO::ERRMODE_WARNING);
 if(isset($_POST['Envoyer'])){
     $login = htmlspecialchars($_POST['login']); 
     $password = $_POST['password'];
