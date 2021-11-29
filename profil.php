@@ -2,6 +2,7 @@
 session_start();
 // $bdd = new PDO('mysql:host=localhost;dbname=moduleconnexion', 'root', '');
 $bdd = new PDO('mysql:host=localhost;dbname=claude-rodriguez_moduleconnexion', 'claude', 'rodriguez');
+$bdd ->setAttribute(PDO::ATTR_ERRMODE ,PDO::ERRMODE_WARNING);
 if(isset($_SESSION['id']) && ($_SESSION['id'] > 0)){
     $requtilisateur = $bdd->prepare('SELECT * FROM utilisateurs WHERE id = ?');
     $requtilisateur->execute(array($_SESSION['id']));
@@ -139,6 +140,7 @@ if(isset($_SESSION['id']) && ($_SESSION['id'] > 0)){
 }
 else 
 {
-header("Location: connexion.php"); //Si l'utilisateur n'est pas connecté, alors il sera renvoyé sur connexion.php
+header("Location: connexion.php"); //Si l'utilisateur n'est pas connecté, alors il sera renvoyé
+ sur connexion.php
 }
 ?>
